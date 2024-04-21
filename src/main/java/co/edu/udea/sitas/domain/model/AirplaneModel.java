@@ -1,10 +1,11 @@
 package co.edu.udea.sitas.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Setter
@@ -13,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "AirplaneModel")
-public class AirplaneModel {
+public class AirplaneModel implements Serializable {
     @Id
     @Column(name = "airplane_model")
     private String airplaneModel;
@@ -29,4 +30,19 @@ public class AirplaneModel {
 
     @Column(name = "volume_capacity")
     private float volumeCapacity;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "airplaneModel", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Scale> scales;
+
+    @Override
+    public String toString() {
+        return "AirplaneModel{" +
+                "volumeCapacity=" + volumeCapacity +
+                ", cargoCapacity=" + cargoCapacity +
+                ", capacity=" + capacity +
+                ", family='" + family + '\'' +
+                ", airplaneModel='" + airplaneModel + '\'' +
+                '}';
+    }
 }

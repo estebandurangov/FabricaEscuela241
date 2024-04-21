@@ -2,4 +2,4 @@ spring:
     application:
         name: SITAS
     profiles:
-        active: dev
+        active: local

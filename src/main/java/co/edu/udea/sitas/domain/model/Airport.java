@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "Airport")
-public class Airport {
+public class Airport implements Serializable {
     @Id
     @Column(name = "airport_code")
     private String airportCode;
@@ -35,10 +36,22 @@ public class Airport {
     private int runways;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "origin_airport", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "originAirport", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Scale> originScales;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "destination_airport", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "destinationAirport", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Scale> destinationScales;
+
+    @Override
+    public String toString() {
+        return "Airport{" +
+                "runways=" + runways +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", airportCode='" + airportCode + '\'' +
+                '}';
+    }
 }

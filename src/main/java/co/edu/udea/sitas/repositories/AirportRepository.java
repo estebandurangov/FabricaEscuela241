@@ -1,9 +1,9 @@
-package co.edu.udea.sitas.persistence;
+package co.edu.udea.sitas.repositories;
 
 import co.edu.udea.sitas.domain.model.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AirportDAO extends JpaRepository<Airport, String> {
+public interface AirportRepository extends JpaRepository<Airport, String> {
 }

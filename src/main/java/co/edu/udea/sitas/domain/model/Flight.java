@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.Primary;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "Flight")
-public class Flight {
+public class Flight implements Serializable {
     @Id
     @Column(name = "flight_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +34,17 @@ public class Flight {
     private float surcharge;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "flight_id", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Scale> scales;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "flightId=" + flightId +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", basePrice=" + basePrice +
+                ", taxPercent=" + taxPercent +
+                ", surcharge=" + surcharge +
+                '}';
+    }
 }

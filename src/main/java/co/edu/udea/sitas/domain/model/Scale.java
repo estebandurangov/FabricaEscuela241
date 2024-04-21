@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Setter
@@ -14,11 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "Scale")
-public class Scale {
+public class Scale implements Serializable {
     @Id
     @Column(name = "scale_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long scaleId;
+    private Long scale_id;
 
     @ManyToOne
     @JsonIgnore
@@ -45,4 +45,17 @@ public class Scale {
 
     @Column(name = "arrival_date")
     private LocalDateTime arrivalDate;
+
+    @Override
+    public String toString() {
+        return "Scale{" +
+                "scale_id=" + scale_id +
+                ", flight=" + flight +
+                ", airplaneModel=" + airplaneModel +
+                ", originAirport=" + originAirport +
+                ", destinationAirport=" + destinationAirport +
+                ", departureDate=" + departureDate +
+                ", arrivalDate=" + arrivalDate +
+                '}';
+    }
 }

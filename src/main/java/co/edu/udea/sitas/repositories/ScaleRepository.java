@@ -1,4 +1,4 @@
-package co.edu.udea.sitas.persistence;
+package co.edu.udea.sitas.repositories;
 
 import co.edu.udea.sitas.domain.model.Flight;
 import co.edu.udea.sitas.domain.model.Scale;
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ScaleDAO extends JpaRepository<Scale, Long> {
+public interface ScaleRepository extends JpaRepository<Scale, Long> {
     List<Scale> findAllByFlight(Flight flight);
 }

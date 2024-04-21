@@ -1,4 +1,4 @@
-package co.edu.udea.sitas.controller;
+package co.edu.udea.sitas.controllers;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
