@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "AirplaneModel")
+@org.springframework.data.relational.core.mapping.Table(name = "AirplaneModel")
 public class AirplaneModel implements Serializable {
     @Id
     @Column(name = "airplane_model")
@@ -23,13 +23,13 @@ public class AirplaneModel implements Serializable {
     private String family;
 
     @Column(name = "capacity")
-    private int capacity;
+    private Integer capacity;
 
     @Column(name = "cargo_capacity")
-    private float cargoCapacity;
+    private Float cargoCapacity;
 
     @Column(name = "volume_capacity")
-    private float volumeCapacity;
+    private Float volumeCapacity;
 
     @JsonIgnore
     @OneToMany(mappedBy = "airplaneModel", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)

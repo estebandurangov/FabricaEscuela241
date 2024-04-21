@@ -1,14 +1,13 @@
 package co.edu.udea.sitas.controllers;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Configuration
+@Controller
 public class TestController {
-
     @GetMapping(produces = "text/html")
     public ResponseEntity<String> sayHola(){
-        return ResponseEntity.ok("Hola mundo");
+        return ResponseEntity.ok("Hello World");
     }
 }

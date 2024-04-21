@@ -2,14 +2,14 @@ package co.edu.udea.sitas.services;
 
 import co.edu.udea.sitas.domain.model.Flight;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public interface FlightService {
-    List<Flight> findAll();
-    Flight findById(Long id);
+    List<Flight> findAll(Map<String, String> params);
     Flight save(Flight flight);
-    Flight update(Long id, Flight body);
-    Flight delete(Long id);
-    List<Flight> searchByDateInterval(LocalDateTime startDate, LocalDateTime endDate);
+    Optional<Flight> findById(Long id);
+    Optional<Flight>   update(Long id, Flight body);
+    Optional<Flight>   delete(Long id);
 }

@@ -23,8 +23,10 @@ public class SecurityConfiguration {
         return httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("*").permitAll())
-                .sessionManagement(AbstractHttpConfigurer::disable).build();
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("*").permitAll();
+                    auth.requestMatchers("*/**").permitAll();
+                }).sessionManagement(AbstractHttpConfigurer::disable).build();
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package co.edu.udea.sitas.repositories;
+package co.edu.udea.sitas.persistence;
 
 import co.edu.udea.sitas.domain.model.Flight;
 import co.edu.udea.sitas.domain.model.Scale;

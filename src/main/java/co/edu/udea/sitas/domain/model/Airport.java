@@ -3,7 +3,6 @@ package co.edu.udea.sitas.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,7 +32,7 @@ public class Airport implements Serializable {
     private String country;
 
     @Column(name = "runways")
-    private int runways;
+    private Integer runways;
 
     @JsonIgnore
     @OneToMany(mappedBy = "originAirport", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)

@@ -3,7 +3,6 @@ package co.edu.udea.sitas.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Primary;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,13 +24,13 @@ public class Flight implements Serializable {
     private String flightNumber;
 
     @Column(name = "base_price")
-    private float basePrice;
+    private Float basePrice;
 
     @Column(name = "tax_percent")
-    private float taxPercent;
+    private Float taxPercent;
 
     @Column(name = "surcharge")
-    private float surcharge;
+    private Float surcharge;
 
     @JsonIgnore
     @OneToMany(mappedBy = "flight", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
