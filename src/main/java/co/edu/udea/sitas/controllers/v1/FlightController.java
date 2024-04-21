@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -31,14 +33,18 @@ public class FlightController {
     public ResponseEntity<List<FlightDTO>> findALL(@RequestParam Map<String, String> reqParam){
         List<FlightDTO> foundFlights;
         log.info("Parameters map: {}", reqParam);
-        log.info("Search flights by dates");
+        log.info("Search flights");
         foundFlights = flightService.findAll(reqParam).stream().map(FlightDTO::buildFlightDTO).toList();
         return ResponseEntity.ok(foundFlights);
     }
 
-
-    private Flight buildFlight(FlightDTO flightDTO) {
-        return new Flight();
+    @GetMapping("/{id}")
+    public ResponseEntity<FlightDTO> findById(@PathVariable Long id){
+        Optional<Flight> optionalFlight = flightService.findById(id);
+        if(optionalFlight.isPresent()) {
+            FlightDTO flightDTO = FlightDTO.buildFlightDTO(optionalFlight.get());
+            return ResponseEntity.ok(flightDTO);
+        }
+        return ResponseEntity.noContent().build();
     }
-
 }

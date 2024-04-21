@@ -52,7 +52,7 @@ public class FlightServiceJPA implements FlightService {
     @Override
     public List<Flight> findAll(Map<String, String> parameters) {
         // Map which have as key the parameter and a function to get the specification
-        Map<String, BiFunction<Specification<Flight>, String, Specification<Flight>>> specBuilders = Map.of(
+        Map<String, BiFunction<Specification<Flight>, String, Specification<Flight>> > specBuilders = Map.of(
                 "start-date", (spec, value) -> spec.and(FlightSpecification.flightsDepartureAfter(LocalDateTime.parse(value))),
                 "end-date", (spec, value) -> spec.and(FlightSpecification.flightsDepartureBefore(LocalDateTime.parse(value))),
                 "flight-number", (spec, value) -> spec.and(FlightSpecification.withFlightNumber(value)),
