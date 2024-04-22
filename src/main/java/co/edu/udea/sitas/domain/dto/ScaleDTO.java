@@ -27,7 +27,7 @@ public class ScaleDTO {
         return ScaleDTO.builder()
                 .scaleId(scale.getScaleId())
                 .flightId(scale.getFlight().getFlightId())
-                .airplaneModel(scale.getAirplaneModel().getAirplaneModel())
+                .airplaneModel(scale.getAirplaneModel().getModel())
                 .originAirport(scale.getOriginAirport().getAirportCode())
                 .destinationAirport(scale.getDestinationAirport().getAirportCode())
                 .departureDate(scale.getDepartureDate().toString())
