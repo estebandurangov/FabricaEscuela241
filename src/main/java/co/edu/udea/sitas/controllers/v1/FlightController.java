@@ -1,8 +1,10 @@
 package co.edu.udea.sitas.controllers.v1;
 
 import co.edu.udea.sitas.domain.dto.FlightDTO;
+import co.edu.udea.sitas.domain.dto.ScaleDTO;
 import co.edu.udea.sitas.domain.model.Flight;
 import co.edu.udea.sitas.services.FlightService;
+import co.edu.udea.sitas.services.ScaleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,12 @@ import java.util.Optional;
 public class FlightController {
 
     private final FlightService flightService;
+    private final ScaleService scaleService;
 
     @Autowired
-    public FlightController(FlightService flightService) {
-        log.info("Controller initialized");
+    public FlightController(FlightService flightService, ScaleService scaleService) {
         this.flightService = flightService;
+        this.scaleService = scaleService;
     }
 
     @GetMapping
@@ -44,6 +47,18 @@ public class FlightController {
         if(optionalFlight.isPresent()) {
             FlightDTO flightDTO = FlightDTO.buildFlightDTO(optionalFlight.get());
             return ResponseEntity.ok(flightDTO);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/scales")
+    public ResponseEntity<List<ScaleDTO>> findScalesById(@PathVariable Long id){
+        Optional<Flight> optionalFlight = flightService.findById(id);
+        if(optionalFlight.isPresent()) {
+            List<ScaleDTO> scales = scaleService
+                    .findAllByFlight(optionalFlight.get())
+                    .stream().map(ScaleDTO::buildScaleDTO).toList();
+            return ResponseEntity.ok(scales);
         }
         return ResponseEntity.noContent().build();
     }

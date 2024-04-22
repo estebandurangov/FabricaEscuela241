@@ -18,7 +18,7 @@ public class Scale implements Serializable {
     @Id
     @Column(name = "scale_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long scale_id;
+    private Long scaleId;
 
     @ManyToOne
     @JsonIgnore
@@ -49,7 +49,7 @@ public class Scale implements Serializable {
     @Override
     public String toString() {
         return "Scale{" +
-                "scale_id=" + scale_id +
+                "scale_id=" + scaleId +
                 ", flight=" + flight +
                 ", airplaneModel=" + airplaneModel +
                 ", originAirport=" + originAirport +

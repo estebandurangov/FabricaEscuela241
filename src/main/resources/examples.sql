@@ -77,3 +77,14 @@ VALUES
     (4, 'AirbusA350', 'HND', 'CDG', '2024-04-23 14:00:00', '2024-04-23 20:00:00'),
     (5, 'EmbraerE190', 'SYD', 'DXB', '2024-04-24 16:00:00', '2024-04-24 22:00:00'),
     (6, 'BombardierCRJ900', 'DXB', 'SYD', '2024-04-25 18:00:00', '2024-04-26 02:00:00');
+
+
+INSERT INTO Flight (flight_number, base_price, tax_percent, surcharge)
+VALUES
+    ('UA123', 650.0, 17.0, 65.0);
+
+INSERT INTO Scale (flight_id, airplane_model, origin_airport, destination_airport, departure_date, arrival_date)
+VALUES
+    (7, 'Boeing737', 'JFK', 'LHR', '2024-04-26 08:00:00', '2024-04-26 12:00:00'),
+    (7, 'AirbusA320', 'LHR', 'CDG', '2024-04-26 14:00:00', '2024-04-26 16:00:00'),
+    (7, 'Boeing777', 'CDG', 'HND', '2024-04-26 18:00:00', '2024-04-27 00:00:00');

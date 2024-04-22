@@ -30,13 +30,11 @@ public class FlightSpecification {
             if (date != null) {
                 Subquery<LocalDateTime> earliestDepartureSubquery = query.subquery(LocalDateTime.class);
                 Root<Scale> scale = earliestDepartureSubquery.from(Scale.class);
-                earliestDepartureSubquery.select(scale.get("departureDate"))
-                        .where(builder.equal(scale.get("flight"), root));
-                query.orderBy(builder.asc(earliestDepartureSubquery.getSelection()));
-                return builder.greaterThanOrEqualTo(
-                        earliestDepartureSubquery.getSelection(), date);
-            } else
+                Expression<LocalDateTime> earliestDeparture = scaleFetchFirst(scale, builder, root, earliestDepartureSubquery, true);
+                return builder.greaterThanOrEqualTo(earliestDeparture, date);
+            } else {
                 return builder.isTrue(builder.literal(true));
+            }
         };
     }
 
@@ -47,15 +45,13 @@ public class FlightSpecification {
      */
     public static Specification<Flight> flightsDepartureBefore(LocalDateTime date) {
         return (Root<Flight> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
-            Subquery<LocalDateTime> earliestDepartureSubquery = query.subquery(LocalDateTime.class);
-            Root<Scale> scale = earliestDepartureSubquery.from(Scale.class);
-            earliestDepartureSubquery.select(scale.get("arrivalDate"))
+            Subquery<LocalDateTime> latestDepartureSubquery = query.subquery(LocalDateTime.class);
+            Root<Scale> scale = latestDepartureSubquery.from(Scale.class);
+            latestDepartureSubquery.select(scale.get("arrivalDate"))
                     .where(builder.equal(scale.get("flight"), root));
 
-            query.orderBy(builder.desc(earliestDepartureSubquery.getSelection()));
-
-            return builder.lessThanOrEqualTo(
-                    earliestDepartureSubquery.getSelection(), date);
+            Expression<LocalDateTime> latestDeparture = scaleFetchFirst(scale, builder, root, latestDepartureSubquery, false);
+            return builder.lessThanOrEqualTo(latestDeparture, date);
         };
     }
 
@@ -149,5 +145,15 @@ public class FlightSpecification {
     public static Specification<Flight> withBasePriceLessThan(Float maxPrice) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.lessThanOrEqualTo(root.get("basePrice"), maxPrice);
+    }
+
+
+    private static Expression<LocalDateTime> scaleFetchFirst(Root<Scale> scale, CriteriaBuilder builder,
+                                                             Root<Flight> root,
+                                                             Subquery<LocalDateTime> subquery,
+                                                             boolean asc) {
+        subquery.select(builder.function(asc ? "min" : "max", LocalDateTime.class, scale.get("departureDate")))
+                .where(builder.equal(scale.get("flight"), root));
+        return subquery.getSelection();
     }
 }
