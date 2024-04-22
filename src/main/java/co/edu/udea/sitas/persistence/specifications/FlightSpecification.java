@@ -43,12 +43,15 @@ public class FlightSpecification {
      * @param date limit date to search flights
      * @return the built specification query
      */
+
+    private static final String FLIGHT = "flight";
+
     public static Specification<Flight> flightsDepartureBefore(LocalDateTime date) {
         return (Root<Flight> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             Subquery<LocalDateTime> latestDepartureSubquery = query.subquery(LocalDateTime.class);
             Root<Scale> scale = latestDepartureSubquery.from(Scale.class);
             latestDepartureSubquery.select(scale.get("arrivalDate"))
-                    .where(builder.equal(scale.get("flight"), root));
+                    .where(builder.equal(scale.get(FLIGHT), root));
 
             Expression<LocalDateTime> latestDeparture = scaleFetchFirst(scale, builder, root, latestDepartureSubquery, false);
             return builder.lessThanOrEqualTo(latestDeparture, date);
@@ -87,7 +90,7 @@ public class FlightSpecification {
             Subquery<String> destinationCitySubquery = query.subquery(String.class);
             Root<Scale> scale = destinationCitySubquery.from(Scale.class);
             destinationCitySubquery.select(scale.join("destinationAirport").get("city"))
-                    .where(builder.equal(scale.get("flight"), root));
+                    .where(builder.equal(scale.get(FLIGHT), root));
 
             return builder.equal(
                     destinationCitySubquery.getSelection(),
@@ -118,7 +121,7 @@ public class FlightSpecification {
             Subquery<String> destinationCitySubquery = query.subquery(String.class);
             Root<Scale> scale = destinationCitySubquery.from(Scale.class);
             destinationCitySubquery.select(scale.join("destinationAirport").get("airportCode"))
-                    .where(builder.equal(scale.get("flight"), root));
+                    .where(builder.equal(scale.get(FLIGHT), root));
 
             return builder.equal(
                     destinationCitySubquery.getSelection(),
@@ -153,7 +156,7 @@ public class FlightSpecification {
                                                              Subquery<LocalDateTime> subquery,
                                                              boolean asc) {
         subquery.select(builder.function(asc ? "min" : "max", LocalDateTime.class, scale.get("departureDate")))
-                .where(builder.equal(scale.get("flight"), root));
+                .where(builder.equal(scale.get(FLIGHT), root));
         return subquery.getSelection();
     }
 }

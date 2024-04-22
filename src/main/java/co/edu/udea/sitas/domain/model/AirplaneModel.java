@@ -17,7 +17,7 @@ import java.util.List;
 public class AirplaneModel implements Serializable {
     @Id
     @Column(name = "airplane_model")
-    private String airplaneModel;
+    private String model;
 
     @Column(name = "family")
     private String family;
@@ -42,7 +42,7 @@ public class AirplaneModel implements Serializable {
                 ", cargoCapacity=" + cargoCapacity +
                 ", capacity=" + capacity +
                 ", family='" + family + '\'' +
-                ", airplaneModel='" + airplaneModel + '\'' +
+                ", airplaneModel='" + model + '\'' +
                 '}';
     }
 }
