@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 
 public class FlightSpecification {
 
+    private FlightSpecification() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Builds a specification that searches flights with a given flight ID.
      *
