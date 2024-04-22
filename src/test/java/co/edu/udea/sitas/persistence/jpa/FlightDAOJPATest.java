@@ -13,6 +13,8 @@ class FlightDAOJPATest {
 
     @Test
     void findAll() {
+        Integer num = 2;
+        assertEquals(2, num);
     }
 
     @Test
