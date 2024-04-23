@@ -1,5 +1,3 @@
-package co.edu.udea.sitas.persistence.jpa;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
